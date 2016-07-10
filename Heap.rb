@@ -36,55 +36,93 @@ class Tree
     @root.right_child = nil
     @root.left_child = nil
     temp = @root
-    # p temp.value
     @root = new_node
-    new_node = temp
+    return new_node = temp
   end
-
   def insert(value)
     new_node = Node.new(value)
     if !@root
       if_blank(new_node)
-    elsif new_node.value <= @root.value
-      switch_root(new_node)
     end
-    current=@root
-    # p " this is the current before attach ===#{current.value}"
-    # p " this is the new_node before attach ===#{new_node.value}"
     if @size >= 1
-      while current.right_child
-        current = current.right_child
-        # p " this is the current ===#{current.value}"
-      end
-      if !current.right_child
-        right_leaf = current
-        # p "right_leaf #{right_leaf} right_leaf value = #{right_leaf.value}"
-        right_leaf.right_child = new_node
-         # p "new_node #{new_node} new_node value = #{new_node.value}"
-        @size += 1
-        # if new_node != @root
-          new_node.parent = right_leaf
-        # end
-      end
+      right_leaf = get_to_bottom(@root)
+      right_leaf.right_child = new_node
+      @size += 1
+      new_node.parent = right_leaf
     else
       @size+= 1
     end
+    # add new method to bubble the value to the best place
   end
 end
 
-  # def order
-  #   current = @root
-  #   if current.right_child
-  #     current = current.right_child
-  #   else
-  #     working_node = current
-  #   end
-  #   if working_node.parent.value > working_node.value
+def get_to_bottom(root)
+  current = root
+  while current.right_child
+    current = current.right_child
+  end
+  if !current.right_child
+    return current
+  end
+end
 
+def bubble(root)
+  active = get_to_bottom(root)
+  recrusive_call(active)
+end
+  # until active !parent call it recursively
+  recrusive_call(node_to_be_checked)
+    active = node_to_be_checked
+    if (active.value < active.parent.value) && (!active.parent.left_child.left_child)
+      # this means the nodes are at the leaves
+      temp = active.parent
+      if active.parent.left_child
+        active.parent = temp.parent
+        active.left_child = temp.left_child
+        active.right_child = temp
+        temp.parent = active
+        # the next few lines need to be changed for this to work recursively on larger data sets
+        temp.right_child = nil
+        temp.left_child = nil
+      else
+        active.parent = temp.parent
+        active.left_child = temp
+        temp.parent = active
+        # the next few lines need to be changed for this to work recursively on larger data sets
+        temp.right_child = nil
+        temp.left_child = nil
+      end
+    elsif
+      # this needs to be done in a way that will preserve all the parents values
+
+    recrusive_call(active)
+
+
+
+    # I first need to see if parent has a left-hand value
+    # if it doesn't that means the parent node needs to be the left_child of active
+    # if it does, it can be the right_child.
+  #is there another case I need to worry about?
+    # Yes I need to make sure everything has it's own left_child
+  else
+    if !active.parent.left_child
+      active.parent.right_child = nil
+      active.parent.left_child = active
+    end
+    #order doesn't matter so long as the lowest value is always on top of the higher values,
+end
+  # def order
+  #   while current.right_child
+  #     current = current.right_child
+  #   end
+  #   if !current.right_child
+  #     right_leaf = current
+  #   end
   # end
 
 
- first = Node.new(1)
+
+first = Node.new(1)
 
 
 tree = Tree.new
@@ -95,16 +133,28 @@ tree.insert(1)
 
 tree.insert(2)
 p "THis is the parent of the root #{tree.root.parent}"
-p "THis is the parent of the leaf #{tree.root.right_child.parent}"
+p "THis is the parent of the first leaf #{tree.root.right_child.parent}"
 
-# tree.insert(3)
-# tree.insert(5)
-# tree.insert(-1)
-# tree
+tree.insert(3)
+p "THis is the parent of the root #{tree.root.parent}"
+p "THis is the parent of the second leaf #{tree.root.right_child.right_child.parent}"
+
+tree.insert(5)
+p "THis is the parent of the root #{tree.root.parent}"
+p "THis is the parent of the third leaf #{tree.root.right_child.right_child.right_child.parent}"
+p "THis is the child of the first leaf #{tree.root.right_child.right_child}"
+
+tree.insert(-1)
+p "THis is the parent of the root #{tree.root.parent}"
+p "this is the value of the root #{tree.root.value}"
+p "this is the value of the parent of the root #{tree.root.parent.value}"
+
+# p tree
 # right_branch = tree.root.right_child
 #  right_leaf = right_branch.right_child
-#  p right_branch.value
-#  p right_leaf.value
-#  p right_leaf.parent.value
+ # p right_branch.value
+ # p right_leaf.value
+ # p right_leaf.parent.value
+ # p tree.root.parent.value
 
 
