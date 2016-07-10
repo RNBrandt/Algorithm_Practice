@@ -92,8 +92,31 @@ end
         temp.right_child = nil
         temp.left_child = nil
       end
-    elsif
-      # this needs to be done in a way that will preserve all the parents values
+    elsif (active.value < active.parent.value) && (active.parent.left_child.left_child)
+      # this needs to be done in a way that will preserve all values
+      parent_holder = active.parent
+      active_holder = active
+      if active.right_child
+        active.parent = parent_holder.parent
+        active.left_child = parent_holder.left_child
+        active.right_child = parent_holder.right_child
+        parent_holder.parent = active
+        parent_holder.left_child = active_holder.left_child
+        parent_holder.right_child = active_holder.right_child
+        active_holder.right_child.parent = active_holder
+        active_holder.left_child.parent = active_holder
+      else
+        active.parent = parent_holder.parent
+        active.left_child = parent_holder.left_child
+        active.right_child = parent_holder.right_child
+        parent_holder.parent = active
+        parent_holder.left_child = active_holder.left_child
+        active_holder.left_child.parent = active_holder
+
+    else
+
+    else
+      # do nothing
 
     recrusive_call(active)
 
