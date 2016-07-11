@@ -1,183 +1,96 @@
-# Design a min heap, and a max heap.
-# Over all design is a complete binary tree.
-# Are useful for immediately grabbing the lowest or highest value of a group.
-# initial creation may take O(n) time, but removal is O(1)
-# Heaps have two functions insert and extract.
-# You insert a value at the right-most leaf to ensure it remains a complete tree.
-# Two classes should be built. Node and Tree.
-# Node will contain the values, and the right and left children.
-# Tree will evaluate the Nodes and reassign values as needed.
-
-class Node
-  attr_accessor :value, :left_child, :right_child, :parent
-  def initialize(value)
-    @value = value
-    @parent = nil
-    @right_child = nil
-    @left_child = nil
-  end
-end
-
-class Tree
-  attr_accessor :root, :size
-  def initialize()
-    @root=nil
-    @size = 0
-  end
-
-  def if_blank(new_node)
-    @root = new_node
-  end
-
-  def switch_root(new_node)
-    new_node.right_child = @root.right_child
-    new_node.left_child = @root.left_child
-    @root.parent = nil
-    @root.right_child = nil
-    @root.left_child = nil
-    temp = @root
-    @root = new_node
-    return new_node = temp
-  end
-  def insert(value)
-    new_node = Node.new(value)
-    if !@root
-      if_blank(new_node)
+class Heap
+    def initialize
+        # @elements is an array representing the tree
+        # for each i:
+        # parent => @elements[i / 2]
+        # left => @elements[i * 2]
+        # right => @elements[i * 2 + 1]
+        @elements = []
     end
-    if @size >= 1
-      right_leaf = get_to_bottom(@root)
-      right_leaf.right_child = new_node
-      @size += 1
-      new_node.parent = right_leaf
-    else
-      @size+= 1
+
+    def empty
+        return @elements.count == 0
     end
-    # add new method to bubble the value to the best place
-  end
-end
 
-def get_to_bottom(root)
-  current = root
-  while current.right_child
-    current = current.right_child
-  end
-  if !current.right_child
-    return current
-  end
-end
+    def pop_min
+        value = @elements[0].first
 
-def bubble(root)
-  active = get_to_bottom(root)
-  recrusive_call(active)
-end
-  # until active !parent call it recursively
-  recrusive_call(node_to_be_checked)
-    active = node_to_be_checked
-    if (active.value < active.parent.value) && (!active.parent.left_child.left_child)
-      # this means the nodes are at the leaves
-      temp = active.parent
-      if active.parent.left_child
-        active.parent = temp.parent
-        active.left_child = temp.left_child
-        active.right_child = temp
-        temp.parent = active
-        # the next few lines need to be changed for this to work recursively on larger data sets
-        temp.right_child = nil
-        temp.left_child = nil
-      else
-        active.parent = temp.parent
-        active.left_child = temp
-        temp.parent = active
-        # the next few lines need to be changed for this to work recursively on larger data sets
-        temp.right_child = nil
-        temp.left_child = nil
-      end
-    elsif (active.value < active.parent.value) && (active.parent.left_child.left_child)
-      # this needs to be done in a way that will preserve all values
-      parent_holder = active.parent
-      active_holder = active
-      if active.right_child
-        active.parent = parent_holder.parent
-        active.left_child = parent_holder.left_child
-        active.right_child = parent_holder.right_child
-        parent_holder.parent = active
-        parent_holder.left_child = active_holder.left_child
-        parent_holder.right_child = active_holder.right_child
-        active_holder.right_child.parent = active_holder
-        active_holder.left_child.parent = active_holder
-      else
-        active.parent = parent_holder.parent
-        active.left_child = parent_holder.left_child
-        active.right_child = parent_holder.right_child
-        parent_holder.parent = active
-        parent_holder.left_child = active_holder.left_child
-        active_holder.left_child.parent = active_holder
+        # Replace the [0]th element with the last one and bubble it down
+        pair = @elements.pop
 
-    else
+        # If it was the last element of the array, abort
+        if @elements.count > 0
+            @elements[0] = pair
+            self.bubble_down(pair, 0)
+        end
 
-    else
-      # do nothing
-
-    recrusive_call(active)
-
-
-
-    # I first need to see if parent has a left-hand value
-    # if it doesn't that means the parent node needs to be the left_child of active
-    # if it does, it can be the right_child.
-  #is there another case I need to worry about?
-    # Yes I need to make sure everything has it's own left_child
-  else
-    if !active.parent.left_child
-      active.parent.right_child = nil
-      active.parent.left_child = active
+        return value
     end
-    #order doesn't matter so long as the lowest value is always on top of the higher values,
+
+    def peek_min
+        return @elements[0].first
+    end
+
+    def push(object, order)
+        # Put the element at the end of the array and bubble it up the tree
+        offset = @elements.count
+        pair = [object, order]
+        @elements << pair
+
+        self.bubble_up pair, offset
+    end
+
+    def bubble_up(pair, offset)
+        # Push an element up the tree, if need be
+        parent = offset / 2
+
+        while (offset > 0 && @elements[parent].last > pair.last)
+            @elements[parent], @elements[offset] = @elements[offset], @elements[parent]
+            offset = parent
+            parent = offset / 2
+        end
+    end
+
+    def bubble_down(pair, offset)
+        # Push an element down the tree if need be
+        while (offset < @elements.count / 2)
+            offset_a = offset * 2
+            offset_b = offset_a + 1
+
+            if @elements[offset_a].last > @elements[offset_b].last
+                smallest = offset_b
+            else
+                smallest = offset_a
+            end
+
+            if pair.last <= @elements[smallest].last
+                break
+            end
+
+            @elements[offset], @elements[smallest] = @elements[smallest], @elements[offset]
+            offset = smallest
+        end
+    end
 end
-  # def order
-  #   while current.right_child
-  #     current = current.right_child
-  #   end
-  #   if !current.right_child
-  #     right_leaf = current
-  #   end
-  # end
 
+h = Heap.new
 
-
-first = Node.new(1)
-
-
-tree = Tree.new
-tree.insert(1)
-# p "THis is the tree #{tree}"
-# p "This is the size of the tree #{tree.size}"
-# p "THis is the root #{tree.root} this is root value #{tree.root.value}"
-
-tree.insert(2)
-p "THis is the parent of the root #{tree.root.parent}"
-p "THis is the parent of the first leaf #{tree.root.right_child.parent}"
-
-tree.insert(3)
-p "THis is the parent of the root #{tree.root.parent}"
-p "THis is the parent of the second leaf #{tree.root.right_child.right_child.parent}"
-
-tree.insert(5)
-p "THis is the parent of the root #{tree.root.parent}"
-p "THis is the parent of the third leaf #{tree.root.right_child.right_child.right_child.parent}"
-p "THis is the child of the first leaf #{tree.root.right_child.right_child}"
-
-tree.insert(-1)
-p "THis is the parent of the root #{tree.root.parent}"
-p "this is the value of the root #{tree.root.value}"
-p "this is the value of the parent of the root #{tree.root.parent.value}"
-
-# p tree
-# right_branch = tree.root.right_child
-#  right_leaf = right_branch.right_child
- # p right_branch.value
- # p right_leaf.value
- # p right_leaf.parent.value
- # p tree.root.parent.value
-
-
+# Insert 'a' => 'o' in the heap, random order
+h.push "g", 7
+h.push "m", 13
+h.push "k", 11
+h.push "d", 4
+h.push "c", 3
+h.push "n", 14
+h.push "b", 2
+h.push "f", 6
+h.push "a", 1
+h.push "j", 10
+h.push "i", 9
+h.push "e", 5
+h.push "o", 15
+h.push "h", 8
+h.push "l", 12
+p h
+h.pop_min
+p h
