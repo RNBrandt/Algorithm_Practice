@@ -52,26 +52,40 @@ class Binary_Search_Tree
     @value = value
     stack = [@root]
     current = stack.pop
-    checked = {}
+    checked = []
     while stack.length > 0
       if current.val == @value
         p current
         break
-      elsif current.leftChild && !checked[leftChild]
+      elsif current.leftChild && !checked.includes?(current.leftChild)
         if current.leftChild.val == @value
-          p current.leftChild
+          current.leftChild
         else
-          checked[current.leftChild] = true
+          checked << current.leftChild
           stack << current.leftChild
-      elsif current.rightChild && !checked[rightChild]
+      elsif current.rightChild && !!checked.includes?(current.rightChild)
           if current.rightChild.val == @value
-            p current.rightChild
+            current.rightChild
           else
-            checked[current.rightChild] = true
+            checked << current.rightChild
             stack << current.rightChild
           end
         end
       end
+      return checked
     end
   end
+
+  def find_common_ancestor(first_value, second_value)
+    first_checked = depth_first(first_value)
+    second_checked = depth_first(second_value)
+    final = []
+    first_checked.each do |value|
+      if second_checked.includes?(value)
+        final << value
+      end
+    end
+    final.pop
+  end
+
 end
