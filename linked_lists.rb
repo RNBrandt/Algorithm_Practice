@@ -4,9 +4,9 @@
 #method, create a pointer which will be created -n nodes from a lead pointer.
 #edges 1) If there aren't n nodes
 
-#Challenge two, make a Balanced Binary Search tree out of a sorted DLL
+#Challenge two, make a Balanced Binary Search tree out of an  un-sorted DLL
 class Node
- attr_accessor :next
+ attr_accessor :bigger, :smaller
  attr_reader :value
   def initialize(value)
     @value = value
@@ -44,13 +44,9 @@ class Linked_list
         return "There aren't #{n} values"
       end
       counter +=1
-      p "This is the lead_pointer value: #{lead_pointer.value}"
-      p "This is the counter: #{counter}"
     end
     following_pointer = @head
     until !lead_pointer.bigger
-      p "This is the lead_pointer value: #{lead_pointer.value}"
-      p "This is the following_pointer value: #{following_pointer.value}"
       lead_pointer = lead_pointer.bigger
       following_pointer = following_pointer.bigger
     end
@@ -58,7 +54,7 @@ class Linked_list
   end
 end
 
-class BST
+class Bst
   def initialize
     @root = nil
   end
@@ -87,8 +83,29 @@ class BST
     end
   end
 
-  def break_sorted_linked_list(sll)
-    #this will take a sorted linked list and create a queue of nodes to be passed into the next program
+  def break_unsorted_linked_list(ll)
+    #this will take an unsorted linked list and create a queue of nodes to be passed into the next program
+    current = ll.head
+    node_array = []
+    counter = 0
+    while current
+      if current.bigger
+        temp = current
+        p "THIS IS CURRENT #{current.bigger}"
+        p "THIS IS temp #{temp.bigger}"
+        node_array << temp
+        current = current.bigger
+        temp.smaller = nil
+        temp.bigger = nil
+        p "THIS IS THE NOT THE NEW CURRENT #{current.bigger}"
+        p "THIS IS THE NEW CURRENT #{current}"
+      else
+        current.smaller = nil
+        node_array << current
+        break
+      end
+    end
+    p node_array
   end
 
 
@@ -104,7 +121,11 @@ test.add_node(5)
 test.add_node(6)
 test.add_node(7)
 test.add_node(8)
-p test.find_nth_from_end(1)
+test.find_nth_from_end(1)
+# p test.head
+
+search = Bst.new
+search.break_unsorted_linked_list(test)
 
 
 
