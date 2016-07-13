@@ -91,21 +91,53 @@ class Bst
     while current
       if current.bigger
         temp = current
-        p "THIS IS CURRENT #{current.bigger}"
-        p "THIS IS temp #{temp.bigger}"
         node_array << temp
         current = current.bigger
         temp.smaller = nil
         temp.bigger = nil
-        p "THIS IS THE NOT THE NEW CURRENT #{current.bigger}"
-        p "THIS IS THE NEW CURRENT #{current}"
       else
         current.smaller = nil
         node_array << current
         break
       end
     end
-    p node_array
+    node_array
+  end
+
+  def sort_unsorted_node_array(usna)
+    if usna.length <=1
+      return usna
+    end
+    mid = (usna.length)/2
+    left = usna.slice(0...mid)
+    right = usna.slice(mid..usna.length)
+    return sort_helper(sort_unsorted_node_array(left), sort_unsorted_node_array(right))
+  end
+
+  def sort_helper(array_1, array_2)
+    pointer_1 = 0
+    pointer_2 = 0
+    result = []
+    if !array_1
+      array_2
+    elsif !array_2
+      array_1
+    end
+    while array_1[pointer_1] && array_2[pointer_2]
+      if array_1[pointer_1].value <= array_2[pointer_2].value
+        result << array_1[pointer_1]
+        pointer_1 +=1
+      else
+        result << array_2[pointer_2]
+        pointer_2 +=1
+      end
+      if pointer_1 == array_1.length
+        result = result.concat(array_2.slice(pointer_2..-1))
+      elsif pointer_2 == array_2.length
+        result = result.concat(array_1.slice(pointer_1..-1))
+      end
+    end
+    result
   end
 
 
@@ -113,19 +145,21 @@ end
 
 
 test = Linked_list.new
-test.add_node(1)
-test.add_node(2)
-test.add_node(3)
-test.add_node(4)
-test.add_node(5)
-test.add_node(6)
 test.add_node(7)
+test.add_node(3)
+test.add_node(1)
+test.add_node(5)
+test.add_node(4)
+test.add_node(6)
 test.add_node(8)
+test.add_node(2)
 test.find_nth_from_end(1)
 # p test.head
 
 search = Bst.new
-search.break_unsorted_linked_list(test)
+test_array = search.break_unsorted_linked_list(test)
+p search.sort_unsorted_node_array(test_array)
+
 
 
 
