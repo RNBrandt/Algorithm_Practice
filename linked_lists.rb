@@ -139,27 +139,52 @@ class Bst
     end
     result
   end
+  def arrange_node_queue(sorted_array, queue)
+    if queue[0]
+      queue = queue
+    else
+      queue = []
+    end
+    if sorted_array.length <=1
+      return
+    end
+    mid = sorted_array.length/2
+    left = sorted_array.slice(0...mid)
+    right = sorted_array.slice(mid...sorted_array.length)
+    queue << sorted_array[mid]
+    p "RIGHT : #{right}"
+    p "LEFT : #{left}"
+    # queue << right.pop
+    arrange_node_queue(left, queue)
+    arrange_node_queue(right, queue)
+    queue
+    # p queue [1,2,3,4,5,6,7]
+  end
 
-
+  # def queue_helper(array_half)
+  #   result = array_half.pop
+  #   p array_half
+  # end
 end
 
 
 test = Linked_list.new
 test.add_node(7)
 test.add_node(3)
-test.add_node(1)
 test.add_node(5)
 test.add_node(4)
 test.add_node(6)
-test.add_node(8)
 test.add_node(2)
+test.add_node(8)
 test.find_nth_from_end(1)
 # p test.head
-
 search = Bst.new
 test_array = search.break_unsorted_linked_list(test)
-p search.sort_unsorted_node_array(test_array)
+sorted_test = search.sort_unsorted_node_array(test_array)
+p search.arrange_node_queue(sorted_test, [])
+# p sorted_test
 
 
-
+[1,2,3,4,5,6,7]
+[2,3,4,5,6,7,8]
 
