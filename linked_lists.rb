@@ -59,25 +59,28 @@ class Bst
     @root = nil
   end
 
-  def insert(node)
-    if !@root
-      @root = node
-    end
-    queue = [@root]
-    while queue.length
-      current  = queue.shift
-      # If I've done this right, the first layer of if statement shouldn't be needed
-      if node.value < current.value
-        if !current.smaller
-          current.smaller = node
-        else
-          queue.push(current.smaller)
-        end
-      else
-        if !current.bigger
-          current.bigger = node
-        else
-          queue.push(current.bigger)
+  def insert(sorted_queue)
+    sorted_queue.each do |node|
+      p node
+      if !@root
+        @root = node
+      end
+      queue = [@root]
+      while queue.length > 0
+        current  = queue.shift
+        # If I've done this right, the first layer of if statement shouldn't be needed
+        if node.value < current.value
+          if !current.smaller
+            current.smaller = node
+          else
+            queue.push(current.smaller)
+          end
+        elsif (node.value > current.value)
+          if !current.bigger
+            current.bigger = node
+          else
+            queue.push(current.bigger)
+          end
         end
       end
     end
@@ -148,14 +151,11 @@ class Bst
     left = sorted_array.slice(0...mid)
     right = sorted_array.slice(mid...sorted_array.length)
     queue << sorted_array[mid]
-    # puts "RIGHT : #{right}"
-    # puts "LEFT : #{left}"
-    # while left != right
     arrange_node_queue(right, queue)
     arrange_node_queue(left, queue)
-    # end
     queue
   end
+
   def arrange_wrapper(sorted_array)
     first = sorted_array[0]
     queue = arrange_node_queue(sorted_array,[])
@@ -167,6 +167,14 @@ class Bst
   #   result = array_half.pop
   #   p array_half
   # end
+end
+
+def min_heap
+
+end
+
+def max_heap
+
 end
 
 
@@ -183,8 +191,9 @@ test.find_nth_from_end(1)
 # p test.head
 search = Bst.new
 test_array = search.break_unsorted_linked_list(test)
- sorted_test = search.sort_unsorted_node_array(test_array)
-p search.arrange_wrapper(sorted_test)
+sorted_test = search.sort_unsorted_node_array(test_array)
+bst_queue = search.arrange_wrapper(sorted_test)
+p search.insert(bst_queue)
 # p sorted_test
 
 
