@@ -144,7 +144,6 @@ class Bst
   end
   def arrange_node_queue(sorted_array, queue)
     if sorted_array.length <=1
-      # queue << sorted_array[0]
       return
     end
     mid = sorted_array.length/2

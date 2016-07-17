@@ -23,24 +23,25 @@ class Min_heap
 
   def insert(value)
     @heap << value
-    self.bubble_up(@heap.length-1)
+    bubble_up(@heap.length-1)
   end
 
-  def bubble_up(index)
+  def find_parent(index)
     if index%2 == 0
       parent_index = (index-2)/2
     else
       parent_index = (index-1)/2
     end
-    # p "***************** PARENT INDEX#{@heap[parent_index]}"
-    # p "***************** INDEX#{@heap[index]}"
-    while @heap[parent_index] > @heap[index]
-      self.swap(parent_index, index)
+  end
+
+  def bubble_up(index)
+    parent_index = find_parent(index)
+    until @heap[parent_index] <= @heap[index]
+      swap(parent_index, index)
       index = parent_index
-      if index%2 == 0
-        parent_index = (index-2)/2
-      else
-        parent_index = (index-1)/2
+      parent_index = find_parent(index)
+      if parent_index == -1
+          break
       end
     end
   end
@@ -49,31 +50,53 @@ class Min_heap
       if find_children(index)
         #do logic
       else
-
+      end
 
   end
 
-  def find_children(parent_index)
+
+  def find_child_to_swap(parent_index)
     # 1) there are no children indexes
     # 2) there is only one child index and the element at the child index does not need to be swapped
     # 3) there is only one child index and the element at the child index does need to be swapped
     # 4) there are two children indexes and neither need to be swapped
     # 5) there are two children indexes and one needs to be swapped
     # 6) there are two children indexes and both could be swapped, but you select the smaller one
-    child_index_array =[]
-    child_index_array << first_child_index = (parent_index *2) + 1
-    child_index_array << (parent_index * 2) + 2
+    first_child_index = (parent_index *2) + 1
+    second_child_index = (parent_index * 2) + 2
+    if child_index = compare_children(first_child_index, second_child_index)
+      compare_parent_child(child_index)
+    end
+  end
+
+  def compare_children(first_child_index, second_child_index)
+    if @heap[first_child_index] && @heap[second_child_index]
+      if @heap[first_child_index] <= @heap[second_child_index]
+        child_index_to_swap = first_child_index
+      else
+        child_index_to_swap = second_child_index
+      end
+    elsif @heap[first_child_index]
+      child_index_to_swap = first_child_index
+    else child_index_to_swap = nil
+    end
+  end
+
+  def compare_parent_child(parent_index, child_index)
+    if @heap[parent_index] > @heap[child_index]
+      child_index
+    end
   end
 
 end
 
 test = Min_heap.new
-test.insert(1)
-test.insert(3)
 test.insert(7)
-test.insert(5)
 test.insert(10)
+test.insert(5)
+test.insert(3)
 test.insert(9)
+test.insert(1)
 test.insert(6)
 
 p test
