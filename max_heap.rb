@@ -1,6 +1,6 @@
-# http://eloquentjavascript.net/1st_edition/appendix2.html
 
-class Min_heap
+
+class Max_heap
 #   overall will be an array
   attr_accessor :heap
   def initialize()
@@ -28,7 +28,7 @@ class Min_heap
 
   def bubble_up(index)
     parent_index = find_parent(index)
-    until @heap[parent_index] <= @heap[index]
+    until @heap[parent_index] >= @heap[index]
       swap(parent_index, index)
       index = parent_index
       parent_index = find_parent(index)
@@ -38,7 +38,7 @@ class Min_heap
     end
   end
 
-  def remove_min
+  def remove_max
     swap(0,@heap.length-1)
     min = @heap.pop
     bubble_down(0)
@@ -63,7 +63,7 @@ class Min_heap
 
   def compare_children(first_child_index, second_child_index)
     if @heap[first_child_index] && @heap[second_child_index]
-      if @heap[first_child_index] <= @heap[second_child_index]
+      if @heap[first_child_index] >= @heap[second_child_index]
         child_index_to_swap = first_child_index
       else
         child_index_to_swap = second_child_index
@@ -75,7 +75,7 @@ class Min_heap
   end
 
   def compare_parent_child(parent_index, child_index)
-    if @heap[parent_index] > @heap[child_index]
+    if @heap[parent_index] < @heap[child_index]
       child_index
     end
   end
@@ -85,17 +85,18 @@ class Min_heap
   end
 end
 
-test = Min_heap.new
+test = Max_heap.new
 test.insert(7)
 test.insert(5)
 test.insert(3)
-p test.remove_min
+p test.remove_max
 test.insert(1)
 test.insert(10)
 test.insert(9)
 test.insert(6)
 p test
-p test.remove_min
+p test.remove_max
 p test
 p test.peek
+
 
