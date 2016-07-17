@@ -7,14 +7,6 @@ class Min_heap
     @heap = []
   end
 
-  # methods Insert, remove min (head), peek(see min element)
-
-  # bubbleUp, bubbleDown, swap
-
-  #Insert add element at the end of the array, and bubble up
-
-  #remove SWAP the first element with the last, pop it off, and BUBBLE DOWN
-
   def swap(index_1, index_2)
     temp =  @heap[index_1]
     @heap[index_1] = @heap[index_2]
@@ -62,12 +54,6 @@ class Min_heap
   end
 
   def find_child_to_swap(parent_index)
-    # 1) there are no children indexes
-    # 2) there is only one child index and the element at the child index does not need to be swapped
-    # 3) there is only one child index and the element at the child index does need to be swapped
-    # 4) there are two children indexes and neither need to be swapped
-    # 5) there are two children indexes and one needs to be swapped
-    # 6) there are two children indexes and both could be swapped, but you select the smaller one
     first_child_index = (parent_index *2) + 1
     second_child_index = (parent_index * 2) + 2
     if child_index = compare_children(first_child_index, second_child_index)
@@ -94,6 +80,10 @@ class Min_heap
     end
   end
 
+  def peek
+    @heap[0]
+  end
+
 end
 
 test = Min_heap.new
@@ -108,4 +98,5 @@ test.insert(6)
 p test
 p test.remove_min
 p test
+p test.peek
 
