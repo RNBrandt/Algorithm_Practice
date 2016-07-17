@@ -46,14 +46,20 @@ class Min_heap
     end
   end
 
-  def bubble_down(index)
-      if find_children(index)
-        #do logic
-      else
-      end
-
+  def remove_min
+    swap(0,@heap.length-1)
+    min = @heap.pop
+    bubble_down(0)
+    min
   end
 
+  def bubble_down(index)
+    while find_child_to_swap(index)
+      child_index = find_child_to_swap(index)
+      swap(child_index, index)
+      index = child_index
+    end
+  end
 
   def find_child_to_swap(parent_index)
     # 1) there are no children indexes
@@ -65,7 +71,7 @@ class Min_heap
     first_child_index = (parent_index *2) + 1
     second_child_index = (parent_index * 2) + 2
     if child_index = compare_children(first_child_index, second_child_index)
-      compare_parent_child(child_index)
+      compare_parent_child(parent_index, child_index)
     end
   end
 
@@ -92,11 +98,14 @@ end
 
 test = Min_heap.new
 test.insert(7)
-test.insert(10)
 test.insert(5)
 test.insert(3)
-test.insert(9)
+p test.remove_min
 test.insert(1)
+test.insert(10)
+test.insert(9)
 test.insert(6)
-
 p test
+p test.remove_min
+p test
+
