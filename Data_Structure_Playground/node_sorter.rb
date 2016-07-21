@@ -1,5 +1,5 @@
-class Node_sorter
-
+require_relative 'node'
+class Node_sorter < Node
   def break_unsorted_linked_list(ll)
     #this will take an unsorted linked list and create a queue of nodes to be passed into the next program
     current = ll.head

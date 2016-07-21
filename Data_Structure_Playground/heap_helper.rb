@@ -1,3 +1,4 @@
+require_relative 'linked_lists'
 class Heap
 #   overall will be an array
   attr_accessor :heap
