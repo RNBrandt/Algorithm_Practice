@@ -1,25 +1,32 @@
 #This should take the functions and return the data structure requested
 # 1) determine what the data type is
 # 2) ask user what data structure they want in return
-require_relative
+require_relative "min_heap"
+require_relative 'max_heap'
+require_relative 'linked_lists'
+require_relative 'Binary_search_tree'
 
 class Creator
   def initialize(input)
-    case input
-    when input.is_a?(Integer)
+    # input = $stdin.gets.chomp.to_i
+    # p input
+    if input.is_a?(Integer)
+    # when input == 1
+      # p "#{input}"
       node = Node.new(input)
       node_placer(node)
-    when input.is_a?(Array)
-      @array = input
-    when input.is_a?(Max_heap)
-      @max_heap = input
-    when input.is_a?(Min_heap)
-      @min_heap = input
-    when input.is_a?(Linked_list)
-      @linked_list = input
-    when input.is_a?(Node)
-      node = input
-      node_placer(node)
+    # when input.is_a?(Array)
+  elsif input.is_a?(Array)
+    #   @array = input
+    # when input.is_a?(Max_heap)
+    #   @max_heap = input
+    # when input.is_a?(Min_heap)
+    #   @min_heap = input
+    # when input.is_a?(Linked_list)
+    #   @linked_list = input
+    # when input.is_a?(Node)
+    #   node = input
+    #   node_placer(node)
     else
       p 'invalid data type'
     end
@@ -41,7 +48,8 @@ class Creator
   def node_case(user_input, node)
     case user_input
       when "a"
-        Linked_list.new(node)
+       temp = Linked_list.new
+       temp.add_unordered_node(node)
       when "b"
         p "please input the linked list to be added"
         ull = $stdin.gets.chomp
@@ -63,15 +71,22 @@ class Creator
         unsorted_node_array =  future_bst.break_nodes(bst)
         sorted_array = future_bst.sort_unsorted_node_array(unsorted_node_array)
         sorted_queue = future_bst.arrange_wrapper(sorted_array)
-        "#{input}" = future_bst.insert(sorted_queue)
-
+        future_bst.insert(sorted_queue)
       when "g"
         temp = Heap.new()
         temp.insert(node)
       when "h"
+        p "Please input the min heap you to be added"
+        input = $stdin.gets.chomp
+        input.insert(node)
       else
         p "please input a valid option "
         user_input = $stdin.gets.chomp
         node_case(user_input, node)
+      end
     end
 end
+pretend = Linked_list.new
+pretend.add_unordered_node(3)
+pretend.add_unordered_node(5)
+test = Creator.new(1)

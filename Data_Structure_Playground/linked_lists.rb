@@ -14,6 +14,9 @@ class Linked_list < Node_sorter
   end
 
   def add_unordered_node(node)
+    if node.is_a?(Integer)
+      node = Node.new(node)
+    end
     # node = Node.new(value)
     if !@tail
       @tail = node

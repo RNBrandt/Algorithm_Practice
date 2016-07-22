@@ -28,24 +28,24 @@ class Max_heap < Heap
   end
 
   def compare_parent_child(parent_index, child_index)
-    if @heap[parent_index] < @heap[child_index]
+    if @heap[parent_index].value < @heap[child_index].value
       child_index
     end
   end
 end
 
-test = Max_heap.new
-test.insert(7)
-test.insert(5)
-test.insert(3)
-p test.remove_top
-test.insert(1)
-test.insert(10)
-test.insert(9)
-test.insert(6)
-p test
-p test.remove_top
-p test
-p test.peek
+# test = Max_heap.new
+# test.insert(7)
+# test.insert(5)
+# test.insert(3)
+# p test.remove_top
+# test.insert(1)
+# test.insert(10)
+# test.insert(9)
+# test.insert(6)
+# p test
+# p test.remove_top
+# p test
+# p test.peek
 
 

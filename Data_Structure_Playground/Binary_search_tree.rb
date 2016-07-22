@@ -54,24 +54,24 @@ class Bst < Node_sorter
   end
 end
 
-test = Linked_list.new
-test.add_unordered_node(7)
-test.add_unordered_node(3)
-test.add_unordered_node(1)
-test.add_unordered_node(5)
-test.add_unordered_node(4)
-test.add_unordered_node(6)
-test.add_unordered_node(2)
-test.add_unordered_node(8)
-test.find_nth_from_end(1)
-# p test.head
-search = Bst.new
-test_array = search.break_unsorted_linked_list(test)
-sorted_test = search.sort_unsorted_node_array(test_array)
-bst_queue = search.arrange_wrapper(sorted_test)
-search.insert(bst_queue)
-# p sorted_test
-p search.is_a?(Bst)
+# test = Linked_list.new
+# test.add_unordered_node(7)
+# test.add_unordered_node(3)
+# test.add_unordered_node(1)
+# test.add_unordered_node(5)
+# test.add_unordered_node(4)
+# test.add_unordered_node(6)
+# test.add_unordered_node(2)
+# test.add_unordered_node(8)
+# test.find_nth_from_end(1)
+# # p test.head
+# search = Bst.new
+# test_array = search.break_unsorted_linked_list(test)
+# sorted_test = search.sort_unsorted_node_array(test_array)
+# bst_queue = search.arrange_wrapper(sorted_test)
+# search.insert(bst_queue)
+# # p sorted_test
+# p search.is_a?(Bst)
 
 
 [1,2,3,4,5,6,7]
