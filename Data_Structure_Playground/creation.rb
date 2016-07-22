@@ -36,20 +36,40 @@ class Creator
     p "g) Create a new min or max heap"
     p "h) Add to an existing min or max heap"
     user_input = $stdin.gets.chomp
+    p node_case(user_input, node)
   end
-  def node_case(user_input)
+  def node_case(user_input, node)
     case user_input
       when "a"
+        Linked_list.new(node)
       when "b"
+        p "please input the linked list to be added"
+        ull = $stdin.gets.chomp
+        ull.add_unordered_node(node)
       when "c"
+        Linked_list.new(node)
       when "d"
+        p "please input the linked list to be added"
+        oll = $stdin.gets.chomp
+        oll.add_ordered_node(node)
       when "e"
+        sorted_queue = [node]
+        Bst.new(sorted_queue)
       when "f"
+        p "please input the Binary search tree to be added to"
+        input = $stdin.gets.chomp
+        bst = input
+        future_bst = Bst.new
+        unsorted_node_array =  future_bst.break_nodes(bst)
+        sorted_array = future_bst.sort_unsorted_node_array(unsorted_node_array)
+        sorted_queue = future_bst.arrange_wrapper(sorted_array)
+        "#{input}" = future_bst.insert(sorted_queue)
+
       when "g"
       when "h"
       else
         p "please input a valid option "
         user_input = $stdin.gets.chomp
-        node_case(user_input)
+        node_case(user_input, node)
     end
 end

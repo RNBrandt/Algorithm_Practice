@@ -6,18 +6,18 @@
 require_relative 'node_sorter'
 
 class Linked_list < Node_sorter
-  attr_accessor :tail, :head
+  attr_accessor :tail, :root
   attr_reader :list_length
   def initialize
     @tail = nil
-    @head = nil
+    @root = nil
   end
 
-  def add_unordered_node(value)
-    node = Node.new(value)
+  def add_unordered_node(node)
+    # node = Node.new(value)
     if !@tail
       @tail = node
-      @head = node
+      @root = node
     else
       @tail.bigger = node
       node.smaller = @tail
@@ -26,15 +26,15 @@ class Linked_list < Node_sorter
   end
 
   def add_ordered_node(value)
-    node = Node.new(value)
+    # node = Node.new(value)
     if !@tail
       @tail = node
-      @head = node
-    elsif node.value <= @head.value
-      temp = @head
+      @root = node
+    elsif node.value <= @root.value
+      temp = @root
       node.bigger = temp
       temp.smaller = node
-      @head = node
+      @root = node
     else
       until current.value <= node.value
         current = current.bigger
@@ -46,7 +46,7 @@ class Linked_list < Node_sorter
   end
 
   def find_nth_from_end(n)
-    lead_pointer = @head
+    lead_pointer = @root
     counter = 2
     (n-1).times do
       lead_pointer = lead_pointer.bigger
@@ -55,7 +55,7 @@ class Linked_list < Node_sorter
       end
       counter +=1
     end
-    following_pointer = @head
+    following_pointer = @root
     until !lead_pointer.bigger
       lead_pointer = lead_pointer.bigger
       following_pointer = following_pointer.bigger
