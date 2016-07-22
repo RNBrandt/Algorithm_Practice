@@ -33,8 +33,8 @@ class Creator
     p "d) Add to an existing sorted linked list"
     p "e) Create a new Binary Search Tree"
     p "f) Add to an existing Binary Search Tree"
-    p "g) Create a new min or max heap"
-    p "h) Add to an existing min or max heap"
+    p "g) Create a new min heap"
+    p "h) Add to an existing min heap"
     user_input = $stdin.gets.chomp
     p node_case(user_input, node)
   end
@@ -66,6 +66,8 @@ class Creator
         "#{input}" = future_bst.insert(sorted_queue)
 
       when "g"
+        temp = Heap.new()
+        temp.insert(node)
       when "h"
       else
         p "please input a valid option "

@@ -1,4 +1,5 @@
 require_relative 'linked_lists'
+require_relative 'node'
 class Heap
 #   overall will be an array
   attr_accessor :heap
@@ -13,7 +14,8 @@ class Heap
   end
 
   def insert(value)
-    @heap << value
+    node = Node.new(value)
+    @heap << node
     bubble_up(@heap.length-1)
   end
 

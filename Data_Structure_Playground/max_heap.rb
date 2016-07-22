@@ -4,7 +4,7 @@ class Max_heap < Heap
 
   def bubble_up(index)
     parent_index = find_parent(index)
-    until @heap[parent_index] >= @heap[index]
+    until @heap[parent_index].value >= @heap[index].value
       swap(parent_index, index)
       index = parent_index
       parent_index = find_parent(index)
@@ -16,7 +16,7 @@ class Max_heap < Heap
 
   def compare_children(first_child_index, second_child_index)
     if @heap[first_child_index] && @heap[second_child_index]
-      if @heap[first_child_index] >= @heap[second_child_index]
+      if @heap[first_child_index].value >= @heap[second_child_index].value
         child_index_to_swap = first_child_index
       else
         child_index_to_swap = second_child_index
