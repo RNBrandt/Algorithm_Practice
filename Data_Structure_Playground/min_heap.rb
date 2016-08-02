@@ -41,19 +41,4 @@ class Min_heap < Heap
   end
 end
 
-# test = Min_heap.new
-# p test
-# test.insert(7)
-# p test
-# test.insert(5)
-# test.insert(3)
-# p test.remove_top
-# test.insert(1)
-# test.insert(10)
-# test.insert(9)
-# test.insert(6)
-# p test
-# p test.remove_top
-# p test
-# p test.peek
 
