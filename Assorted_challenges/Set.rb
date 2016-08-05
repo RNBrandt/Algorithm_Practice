@@ -10,7 +10,7 @@
 #   - Values can be deleted
 #   - When the number of elements > 75% of the number of buckets, the number of buckets will double, and the values will be redistributed among the new buckets.
 #     - This minimizes collisions, and therefore, the time complexity
-#   - When the number of elements falls below 25% of the number of buckets, the number of buckets will halve, and the values will be redistributed among the new buckets; however, there will never be fewer than 8 buckets in the Set.
+#    - When the number of elements falls below 25% of the number of buckets, the number of buckets will halve, and the values will be redistributed among the new buckets; however, there will never be fewer than 8 buckets in the Set.
 #     - This works to increase storage efficiency
 
 
