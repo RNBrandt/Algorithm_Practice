@@ -48,7 +48,7 @@ class Binary_Search_Tree
 
   def depth_first(value)
     # Now that I've built this, I need to modify it to persist the path it took.
-    #fortunately most of that functionality is already in the methid
+    #fortunately most of that functionality is already in the method
     @value = value
     stack = [@root]
     current = stack.pop
@@ -63,7 +63,7 @@ class Binary_Search_Tree
         else
           checked << current.leftChild
           stack << current.leftChild
-      elsif current.rightChild && !!checked.includes?(current.rightChild)
+      elsif current.rightChild && !checked.includes?(current.rightChild)
           if current.rightChild.val == @value
             current.rightChild
           else
