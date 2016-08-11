@@ -1,8 +1,8 @@
 require_relative 'node'
 class Node_sorter < Node
-  def break_nodes(ll)
+  def break_nodes
     #this will take an unsorted linked list and create a queue of nodes to be passed into the next program
-    current = ll.root
+    current = @root
     node_array = []
     counter = 0
     while current
@@ -21,8 +21,8 @@ class Node_sorter < Node
     node_array
   end
 
-  def sort_unsorted_node_array(usna)
-    if usna.length <=1
+  def sort_unsorted_node_array
+    if self.length <=1
       return usna
     end
     mid = (usna.length)/2
